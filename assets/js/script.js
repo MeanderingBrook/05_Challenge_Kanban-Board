@@ -19,111 +19,157 @@ function createTaskCard(task) {
   // Set Constant for target HTML Element to which Tasks will be added
   const targetDiv = document.getElementById("to-do");
 
-  // Creates <div> for each Task Object, and adds to <ul>
-  taskList.forEach(addTask);
+  console.log(task);
 
-  function addTask(object) {
-    // let taskIDNode = task.taskID;
-    let taskIDNode = object.taskId;
-    let taskTitleNode = object.taskTitle;
-    let taskDateNode = object.taskDate;
-    let taskDescrNode = object.taskDescr;
+  // MOVED TO renderTaskLIST !!!!!!
+  // // Creates <div> for each Task Object, and adds to <ul>
+  // taskList.forEach(addTask);
 
-    // Task Container >>
-    // Creates (no-content) <div> to hold individual Tasks
-    const taskDiv = document.createElement("div");
-    taskDiv.classList.add("card");
-    targetDiv.appendChild(taskDiv);
-    // << Task Container
+  // function addTask(object) {
+  // WAS object. NOW task.
+  let taskIDNode = task.taskId;
+  let taskTitleNode = task.taskTitle;
+  let taskDateNode = task.taskDate;
+  let taskDescrNode = task.taskDescr;
 
-    // Task ID >>
-    // Creates <div> to hold Task - ID
-    const taskIDDiv = document.createElement("div");
-    taskIDDiv.classList.add("elementDiv");
-    taskDiv.appendChild(taskIDDiv);
+  // Task Container >>
+  // Creates (no-content) <div> to hold individual Tasks
+  const taskDiv = document.createElement("div");
+  taskDiv.classList.add("task-card");
+  taskDiv.setAttribute("id", taskIDNode);
+  targetDiv.appendChild(taskDiv);
+  // << Task Container
 
-    // Creates <h4> to hold Task - ID ("Task ID")
-    const taskIDHeader = document.createElement("h4");
-    taskIDHeader.classList.add("idHeader");
-    taskIDHeader.textContent = "Task ID";
-    taskIDDiv.appendChild(taskIDHeader);
+  // Task ID >>
+  // Creates <div> to hold Task - ID
+  const taskIDDiv = document.createElement("div");
+  taskIDDiv.classList.add("elementDiv");
+  taskDiv.appendChild(taskIDDiv);
 
-    // Creates <p> to hold Task - ID (Auto-Generated)
-    const taskIDPara = document.createElement("p");
-    taskIDPara.textContent = taskIDNode;
-    taskIDDiv.appendChild(taskIDPara);
-    // << Task ID
+  // Creates <h4> to hold Task - ID ("Task ID")
+  const taskIDHeader = document.createElement("h4");
+  taskIDHeader.classList.add("idHeader");
+  taskIDHeader.textContent = "Task ID";
+  taskIDDiv.appendChild(taskIDHeader);
 
-    // Task Title >>
-    // Creates <div> to hold Task - Title
-    const taskTitleDiv = document.createElement("div");
-    taskTitleDiv.classList.add("elementDiv");
-    // taskTitleDiv.setAttribute("id", "taskTitleDiv");
-    taskDiv.appendChild(taskTitleDiv);
+  // Creates <p> to hold Task - ID (Auto-Generated)
+  const taskIDPara = document.createElement("p");
+  taskIDPara.textContent = taskIDNode;
+  taskIDDiv.appendChild(taskIDPara);
+  // << Task ID
 
-    // Creates <h4> to hold Task - Title ("Task Title")
-    const taskTitleHeader = document.createElement("h4");
-    taskTitleHeader.classList.add("titleHeader");
-    // postTitleHeader.setAttribute("id", "postTitleHeader");
-    taskTitleHeader.textContent = "Task Title";
-    taskTitleDiv.appendChild(taskTitleHeader);
+  // Task Title >>
+  // Creates <div> to hold Task - Title
+  const taskTitleDiv = document.createElement("div");
+  taskTitleDiv.classList.add("elementDiv");
+  // taskTitleDiv.setAttribute("id", "taskTitleDiv");
+  taskDiv.appendChild(taskTitleDiv);
 
-    // Creates <p> to hold Task - Title (User Content)
-    const taskTitlePara = document.createElement("p");
-    taskTitlePara.textContent = taskTitleNode;
-    taskTitleDiv.appendChild(taskTitlePara);
-    // << Task Title
+  // Creates <h4> to hold Task - Title ("Task Title")
+  const taskTitleHeader = document.createElement("h4");
+  taskTitleHeader.classList.add("titleHeader");
+  // postTitleHeader.setAttribute("id", "postTitleHeader");
+  taskTitleHeader.textContent = "Task Title";
+  taskTitleDiv.appendChild(taskTitleHeader);
 
-    // Task Date >>
-    // Creates <div> to hold Task - Date
-    const taskDateDiv = document.createElement("div");
-    taskDateDiv.classList.add("elementDiv");
-    // taskDateDiv.setAttribute("id", "taskDateDiv");
-    taskDiv.appendChild(taskDateDiv);
+  // Creates <p> to hold Task - Title (User Content)
+  const taskTitlePara = document.createElement("p");
+  taskTitlePara.textContent = taskTitleNode;
+  taskTitleDiv.appendChild(taskTitlePara);
+  // << Task Title
 
-    // Creates <h4> to hold Task - Date ("Task Date")
-    const taskDateHeader = document.createElement("h4");
-    taskDateHeader.classList.add("dateHeader");
-    // postContentHeader.setAttribute("id", "postContentHeader");
-    taskDateHeader.textContent = "Task Date";
-    taskDateDiv.appendChild(taskDateHeader);
+  // Task Date >>
+  // Creates <div> to hold Task - Date
+  const taskDateDiv = document.createElement("div");
+  taskDateDiv.classList.add("elementDiv");
+  // taskDateDiv.setAttribute("id", "taskDateDiv");
+  taskDiv.appendChild(taskDateDiv);
 
-    // Creates <p> to hold Task - Date (User Content)
-    const taskDatePara = document.createElement("p");
-    taskDatePara.textContent = taskDateNode;
-    taskDateDiv.appendChild(taskDatePara);
-    // << Task Date
+  // Creates <h4> to hold Task - Date ("Task Date")
+  const taskDateHeader = document.createElement("h4");
+  taskDateHeader.classList.add("dateHeader");
+  // postContentHeader.setAttribute("id", "postContentHeader");
+  taskDateHeader.textContent = "Task Date";
+  taskDateDiv.appendChild(taskDateHeader);
 
-    // Task Description >>
-    // Creates <div> to hold Task - Description
-    const taskDescrDiv = document.createElement("div");
-    taskDescrDiv.classList.add("elementDiv");
-    // taskDescrDiv.setAttribute("id", "taskDescrDiv");
-    taskDiv.appendChild(taskDescrDiv);
+  // Creates <p> to hold Task - Date (User Content)
+  const taskDatePara = document.createElement("p");
+  taskDatePara.textContent = taskDateNode;
+  taskDateDiv.appendChild(taskDatePara);
+  // << Task Date
 
-    // Creates <h4> to hold Task - Description ("Description")
-    const taskDescrHeader = document.createElement("h4");
-    taskDescrHeader.classList.add("descrHeader");
-    // userNameHeader.setAttribute("id", "userNameHeader");
-    taskDescrHeader.textContent = "Description";
-    taskDescrDiv.appendChild(taskDescrHeader);
+  // Task Description >>
+  // Creates <div> to hold Task - Description
+  const taskDescrDiv = document.createElement("div");
+  taskDescrDiv.classList.add("elementDiv");
+  // taskDescrDiv.setAttribute("id", "taskDescrDiv");
+  taskDiv.appendChild(taskDescrDiv);
 
-    // Creates <p> to hold Task - Description (User Content)
-    const taskDescrPara = document.createElement("p");
-    taskDescrPara.textContent = taskDescrNode;
-    taskDescrDiv.appendChild(taskDescrPara);
-    // << Task Description
+  // Creates <h4> to hold Task - Description ("Description")
+  const taskDescrHeader = document.createElement("h4");
+  taskDescrHeader.classList.add("descrHeader");
+  // userNameHeader.setAttribute("id", "userNameHeader");
+  taskDescrHeader.textContent = "Description";
+  taskDescrDiv.appendChild(taskDescrHeader);
 
-    // Task Delete Button >>
-    const taskDeleteBtn = document.createElement("button");
-    taskDeleteBtn.textContent = "Delete";
-    taskDiv.appendChild(taskDeleteBtn);
-    // << Task Delete Button
-  }
+  // Creates <p> to hold Task - Description (User Content)
+  const taskDescrPara = document.createElement("p");
+  taskDescrPara.textContent = taskDescrNode;
+  taskDescrDiv.appendChild(taskDescrPara);
+  // << Task Description
+
+  // Task Delete Button >>
+  const taskDeleteBtn = document.createElement("button");
+  taskDeleteBtn.textContent = "Delete";
+  taskDiv.appendChild(taskDeleteBtn);
+  // << Task Delete Button
+  // }
 }
 
 // Todo: create a function to render the task list and make cards draggable
-function renderTaskList() {}
+// Reference: https://www.w3schools.com/howto/howto_js_draggable.asp
+function renderTaskList() {
+  // Creates <div> for each Task Object, and adds to <ul>
+  taskList.forEach(createTaskCard);
+
+  $(".task-card").draggable({
+    snap: ".card",
+    stack: ".task-card",
+    distance: 0,
+    stop: function (event, ui) {
+      console.log(ui.position);
+      // var pos = ui.position;
+      // var posTop = ui.helper.offset();
+      // var posTop = ;;;
+      var Stoppos = $(this).position();
+      console.log(Stoppos);
+
+      var posLeft = Stoppos.left;
+      console.log(posLeft);
+
+      var posTop = Stoppos.top;
+      console.log(posTop);
+
+      // taskList.this.taskPosLeft = Stoppos.left;
+      // console.log(this.taskPosLeft);
+
+      // this.taskPosTop = Stoppos.top;
+      // console.log(this.taskPosTop);
+
+      // localStorage.setItem("tasks", JSON.stringify(this.taskList));
+
+      // localStorage.setItem(this.taskPositionLeft, this.taskPosLeft);
+      // console.log(taskList.taskPositionLeft);
+
+      // localStorage.setItem(this.taskPositionTop, this.taskPosTop);
+      // console.log(taskList.taskPositionTop);
+
+      // localStorage.setItem(taskList.taskPosition, ui.position);
+
+      // console.log(taskList);
+    },
+  });
+}
 
 // Custom Function
 function openTaskModal() {
@@ -165,9 +211,17 @@ function handleAddTask(event) {
   // Calls generateTaskId() to create unique Task ID (taskID) and stores returned value
   let autoTaskID = generateTaskId();
 
+  // Creates empty Object Element to later store draggable <div> position
+  let taskPosTop = 0;
+  let taskPosLeft = 0;
+
   // Assigns generated Task ID to Temporary Object to be added to Local Storage
   newTask.taskId = autoTaskID;
   console.log(newTask.taskid);
+
+  // Assigns placeholder Task Position to Temporary Object to be added to Local Storage
+  newTask.taskPositionTop = taskPosTop;
+  newTask.taskPositionLeft = taskPosLeft;
 
   // Constants to hold User Input to be added to Local Storage
   const inputTaskTitle = document.getElementById("tasktitle");
@@ -186,7 +240,7 @@ function handleAddTask(event) {
 
   console.log(newTask);
 
-  // If-Else Validation confirms Task Form is complete, else Alert
+  // Validation confirms Task Form is complete, else Alert
   if (
     newTask.taskId &&
     newTask.taskTitle &&
@@ -202,6 +256,8 @@ function handleAddTask(event) {
 
     // Clears User Input values already pushed to Array
     autoTaskID = "";
+    taskPosTop = "";
+    taskPosLeft = "";
     inputTaskTitle.value = "";
     inputTaskDate.value = "";
     inputTaskDescr.value = "";

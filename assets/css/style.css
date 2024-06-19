@@ -17,6 +17,16 @@ body {
 
 .task-card {
   margin: 0 auto;
+  /* ADDED FROM MY CARD */
+  /* margin: 1vh auto;  I TOOK THIS OUT WHEN TRANFERRED HERE */
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
+  border-radius: 10px;
+  border-width: 1px;
+  max-width: 800px;
+  padding: 20px 40px;
+  background-color: rgb(255, 255, 255, 0.90);
+  font-size: 18px;
+  color: rgba(0,0,128,1);
 }
 
 .task-card:hover {
@@ -81,7 +91,10 @@ body {
 
 
 /* TASK <div> */
-card {
+/* FIX THIS OVERWRITE GIVEN FORMATTING, LIKE BORDERS THOUGH */
+.card {
+  /* position: absolute; */
+  /* z-index: 5000; */
   margin: 1vh auto;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
   border-radius: 10px;
@@ -105,3 +118,10 @@ card {
   border-bottom: 1px solid rgb(0, 0, 128);
   padding-bottom: 1.50vh;
 }
+
+
+/* SWIM LANES */
+
+/* .target-lane {
+  z-index: 500;
+} */
