@@ -1,0 +1,107 @@
+/* GLOBAL Styles */
+
+* {
+  margin:0;
+  padding:0;  
+}
+
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.swim-lanes {
+  min-height: 60vh;
+}
+
+.task-card {
+  margin: 0 auto;
+}
+
+.task-card:hover {
+  cursor: grab;
+}
+
+
+/* "Add Task" MODAL DIALOG */
+
+.add-task-modal {
+  position: fixed; 
+  z-index: 1; /* Modal Dialog brought to Front */
+  left: 0;
+  top: 0;
+  display: none; /* On Page Load: Hidden ("Closed") */
+  overflow: auto; 
+  padding-top: 100px; /* Modal (Content) Box Position */
+  width: 100%; /* Defines Background Shading: Full Page Width */
+  height: 100%; /* Defines Background Shading: Full Page Height */
+  background-color: rgb(0,0,0); /* Defines Background Shading: Color (Fallback) */
+  background-color: rgba(0, 0, 64, 0.4); /* Defines Background Shading: Color */
+}
+
+.modal-header {
+  justify-content: center;
+  color:rgb(0, 0, 127);
+}
+
+/* Content Box */
+.modal-content {
+  display: flex;
+  margin: auto;
+  border: 1px solid rgba(0,212,255,1);
+  border-radius: 10px;
+  width: 50%;
+  padding: 20px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 127);
+}
+
+/* Close ("X") Icon */
+.close-modal {
+  float: right;
+  font-size: 28px;
+  text-align: right;
+  font-weight: bold;
+  color: rgb(0, 0, 127);
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  cursor: pointer;
+  text-decoration: none;
+  color: rgba(0,212,255,1);
+}
+
+/* NOT USED */
+/* .modal-fields {
+  display: flex;
+  flex-direction: row;
+} */
+
+
+/* TASK <div> */
+card {
+  margin: 1vh auto;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
+  border-radius: 10px;
+  border-width: 1px;
+  max-width: 800px;
+  padding: 20px 40px;
+  background-color: rgb(255, 255, 255, 0.90);
+  font-size: 18px;
+  color: rgba(0,0,128,1);
+}
+
+.elementDiv {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+#titleDiv {
+  margin-bottom: 4vh;
+  border-bottom: 1px solid rgb(0, 0, 128);
+  padding-bottom: 1.50vh;
+}
