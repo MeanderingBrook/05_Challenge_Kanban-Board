@@ -17,7 +17,6 @@ body {
 
 .task-card {
   margin: 0 auto;
-  /* ADDED FROM MY CARD */
   /* margin: 1vh auto;  I TOOK THIS OUT WHEN TRANFERRED HERE */
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
   border-radius: 10px;
