@@ -19,14 +19,6 @@ function createTaskCard(task) {
   // Set Constant for target HTML Element to which Tasks will be added
   const targetDiv = document.getElementById("to-do");
 
-  console.log(task);
-
-  // MOVED TO renderTaskLIST !!!!!!
-  // // Creates <div> for each Task Object, and adds to <ul>
-  // taskList.forEach(addTask);
-
-  // function addTask(object) {
-  // WAS object. NOW task.
   let taskIDNode = task.taskId;
   let taskTitleNode = task.taskTitle;
   let taskDateNode = task.taskDate;
@@ -120,10 +112,34 @@ function createTaskCard(task) {
 
   // Task Delete Button >>
   const taskDeleteBtn = document.createElement("button");
+  taskDeleteBtn.setAttribute("id", taskIDNode);
   taskDeleteBtn.textContent = "Delete";
+  taskDeleteBtn.addEventListener("click", handleDeleteTask); // Removing () from Function Name allows it to work !!!!!!!!
   taskDiv.appendChild(taskDeleteBtn);
   // << Task Delete Button
+
+  // !!!! Refresh To-Do List with new Task !!!!!!
+  //
+  // $("#to-do").load(location.href + " #to-do");
+
+  // function updateDiv() {
+  //   // $("#here").load(window.location.href + " #here");
+  //   // $("#todo-cards").load(document.'/index.html' + " #todo-cards > *");
+  //   // $("#todo-cards").load(location.index.html + " #todo-cards >*", "");
+
+  //   url: "./index.html";
+  //   $("#to-do").load(document.url + " #to-do > *");
   // }
+
+  // url: "./index.html";
+  // $("#to-do").load(document.url + " #to-do > *");
+
+  // $("#todo-cards").load("./index.html");
+
+  // $("#todo-cards").hide().fadeIn("fast");
+
+  // $("#todo-cards").load(document.'index.html' + " #todo-cards > *");
+  return task;
 }
 
 // Todo: create a function to render the task list and make cards draggable
@@ -132,41 +148,58 @@ function renderTaskList() {
   // Creates <div> for each Task Object, and adds to <ul>
   taskList.forEach(createTaskCard);
 
+  taskInv = taskList;
+
+  taskInv.forEach(
+    (task) =>
+      // console.log(task.taskPositionTop, task.taskPositionLeft);
+      (document.getElementById(task.taskId).style.top = task.taskPositionTop)
+  );
+
+  taskInv.forEach(
+    (task) =>
+      (document.getElementById(task.taskId).style.left = task.taskPositionLeft)
+  );
+
+  var divTopPos;
+  var divLeftPost;
+
   $(".task-card").draggable({
     snap: ".card",
     stack: ".task-card",
     distance: 0,
     stop: function (event, ui) {
+      // alert(this.id);
       console.log(ui.position);
-      // var pos = ui.position;
-      // var posTop = ui.helper.offset();
-      // var posTop = ;;;
-      var Stoppos = $(this).position();
-      console.log(Stoppos);
 
-      var posLeft = Stoppos.left;
-      console.log(posLeft);
+      var taskInv = taskList;
+      console.log(taskInv);
 
-      var posTop = Stoppos.top;
-      console.log(posTop);
+      var taskDragged = this.id;
+      // console.log(taskDragged);
 
-      // taskList.this.taskPosLeft = Stoppos.left;
-      // console.log(this.taskPosLeft);
+      var divPosition = $(this).position();
+      // console.log(divPosition);
 
-      // this.taskPosTop = Stoppos.top;
-      // console.log(this.taskPosTop);
+      var posLeft = divPosition.left;
+      // console.log(posLeft);
 
-      // localStorage.setItem("tasks", JSON.stringify(this.taskList));
+      var posTop = divPosition.top;
+      // console.log(posTop);
 
-      // localStorage.setItem(this.taskPositionLeft, this.taskPosLeft);
-      // console.log(taskList.taskPositionLeft);
+      // Determine dragged Task Index
+      taskIndex = taskInv.findIndex((obj) => obj.taskId == taskDragged);
+      // console.log(taskIndex);
 
-      // localStorage.setItem(this.taskPositionTop, this.taskPosTop);
-      // console.log(taskList.taskPositionTop);
+      // Upate dragged Task Position - Top
+      taskInv[taskIndex].taskPositionTop = posTop;
+      // console.log(taskInv[taskIndex].taskPositionTop);
 
-      // localStorage.setItem(taskList.taskPosition, ui.position);
+      // Upate dragged Task Position - Left
+      taskInv[taskIndex].taskPositionLeft = posLeft;
+      // console.log(taskInv[taskIndex].taskPositionLeft);
 
-      // console.log(taskList);
+      localStorage.setItem("tasks", JSON.stringify(taskInv));
     },
   });
 }
@@ -211,13 +244,19 @@ function handleAddTask(event) {
   // Calls generateTaskId() to create unique Task ID (taskID) and stores returned value
   let autoTaskID = generateTaskId();
 
-  // Creates empty Object Element to later store draggable <div> position
-  let taskPosTop = 0;
-  let taskPosLeft = 0;
-
   // Assigns generated Task ID to Temporary Object to be added to Local Storage
   newTask.taskId = autoTaskID;
   console.log(newTask.taskid);
+
+  // Create Object Element to indicate if Task is active or complete
+  let taskStat = 1;
+
+  // Assigns Task Status to to Temporary Object to be added to Local Storage
+  newTask.taskStatus = taskStat;
+
+  // Creates Object Elements to later store draggable <div> position
+  let taskPosTop = 0;
+  let taskPosLeft = 0;
 
   // Assigns placeholder Task Position to Temporary Object to be added to Local Storage
   newTask.taskPositionTop = taskPosTop;
@@ -256,6 +295,7 @@ function handleAddTask(event) {
 
     // Clears User Input values already pushed to Array
     autoTaskID = "";
+    taskStat = "";
     taskPosTop = "";
     taskPosLeft = "";
     inputTaskTitle.value = "";
@@ -271,13 +311,42 @@ function handleAddTask(event) {
     alert("All Fields are Required. Please fully complete the Task Form.");
     return false;
   }
+
+  // renderTaskList();
+  // window.location.href = window.location.href; // !!!! WHY THIS KLUDGEY WORKAROUND ???? !!!!!!!
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event) {}
+// function handleDeleteTask(event) {  // WHY EVENT ???!!!!!!!!
+function handleDeleteTask(id) {
+  // alert(this.id);
+
+  var taskInv = taskList;
+  // console.log(taskInv);
+
+  var taskDel = this.id;
+  // console.log(taskDel);
+
+  // Superseded in favor of Filter Method
+  // for (var i = 0; i < taskInv.length; i++) {
+  //   if (taskInv[i].taskId == taskDel) {
+  //     taskInv.splice(i, 1);
+  //   }
+  // }
+
+  taskInv = taskInv.filter((task) => task.taskId !== taskDel);
+
+  localStorage.setItem("tasks", JSON.stringify(taskInv));
+
+  // renderTaskList();
+  // location.reload();
+  window.location.href = window.location.href; // !!!! WHY THIS KLUDGEY WORKAROUND ???? !!!!!!!
+}
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {}
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {});
+$(document).ready(function () {
+  renderTaskList();
+});
