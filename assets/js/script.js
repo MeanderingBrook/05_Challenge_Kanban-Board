@@ -32,6 +32,19 @@ function createTaskCard(task) {
   targetDiv.appendChild(taskDiv);
   // << Task Container
 
+  // Compares Task Date and Current Date to flag Task Tardiness (Green - Yellow - Red)
+  let currentDate = new Date().setHours(0, 0, 0, 0);
+  let taskDateFormatted = new Date(task.taskDate).setHours(0, 0, 0, 0);
+
+  // Task is Late (Red)
+  if (currentDate == (taskDateFormatted, "day")) {
+    taskDiv.classList.add("task-card-warning");
+  } else if (currentDate > taskDateFormatted) {
+    taskDiv.classList.add("task-card-late");
+  } else {
+    taskDiv.classList.add("task-card-ontime");
+  }
+
   // Task ID >>
   // Creates <div> to hold Task - ID
   const taskIDDiv = document.createElement("div");
@@ -118,6 +131,7 @@ function createTaskCard(task) {
   taskDiv.appendChild(taskDeleteBtn);
   // << Task Delete Button
 
+  //
   // !!!! Refresh To-Do List with new Task !!!!!!
   //
   // $("#to-do").load(location.href + " #to-do");
@@ -145,25 +159,10 @@ function createTaskCard(task) {
 // Todo: create a function to render the task list and make cards draggable
 // Reference: https://www.w3schools.com/howto/howto_js_draggable.asp
 function renderTaskList() {
-  // Creates <div> for each Task Object, and adds to <ul>
+  // Creates <div> for each Task Object, and adds to To-Do swimlane
   taskList.forEach(createTaskCard);
 
-  taskInv = taskList;
-
-  taskInv.forEach(
-    (task) =>
-      // console.log(task.taskPositionTop, task.taskPositionLeft);
-      (document.getElementById(task.taskId).style.top = task.taskPositionTop)
-  );
-
-  taskInv.forEach(
-    (task) =>
-      (document.getElementById(task.taskId).style.left = task.taskPositionLeft)
-  );
-
-  var divTopPos;
-  var divLeftPost;
-
+  // JQuery: Makes Task Cards draggable and records Card position after 'Drag: Stop' event
   $(".task-card").draggable({
     snap: ".card",
     stack: ".task-card",
@@ -172,19 +171,19 @@ function renderTaskList() {
       // alert(this.id);
       console.log(ui.position);
 
-      var taskInv = taskList;
+      let taskInv = taskList;
       console.log(taskInv);
 
-      var taskDragged = this.id;
+      let taskDragged = this.id;
       // console.log(taskDragged);
 
-      var divPosition = $(this).position();
+      let divPosition = $(this).position();
       // console.log(divPosition);
 
-      var posLeft = divPosition.left;
+      let posLeft = divPosition.left;
       // console.log(posLeft);
 
-      var posTop = divPosition.top;
+      let posTop = divPosition.top;
       // console.log(posTop);
 
       // Determine dragged Task Index
@@ -204,7 +203,7 @@ function renderTaskList() {
   });
 }
 
-// Custom Function
+// Open 'Add Task' Modal Dialog box (Custom Function)
 function openTaskModal() {
   // Sets Reference defining "Add Task" Modal Dialog (<div>)
   const addTaskModal = document.getElementById("addTaskDialog");
@@ -232,6 +231,8 @@ function openTaskModal() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event) {
+  // event.preventDefaul();
+
   newTask = {}; // Temporary Object to hold Task inputs (Title, Date, Description)
   console.log(newTask);
 
@@ -249,7 +250,7 @@ function handleAddTask(event) {
   console.log(newTask.taskid);
 
   // Create Object Element to indicate if Task is active or complete
-  let taskStat = 1;
+  let taskStat = "to-do";
 
   // Assigns Task Status to to Temporary Object to be added to Local Storage
   newTask.taskStatus = taskStat;
@@ -344,7 +345,31 @@ function handleDeleteTask(id) {
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
-function handleDrop(event, ui) {}
+function handleDrop(event, ui) {
+  $(".task-card").draggable({
+    snap: ".card",
+    stack: ".task-card",
+    distance: 0,
+    stop: function (event, ui) {
+      const taskInv = taskList;
+      // console.log(taskInv);
+      const taskDragged = this.id;
+      // console.log(taskDragged);
+      const divPosition = $(this).position();
+      // console.log(divPosition);
+      // Determine dragged Task Index
+      taskIndex = taskInv.findIndex((obj) => obj.taskId == taskDragged);
+      const newStatus = event.target.id;
+
+      for (let task of taskInv) {
+        if (task.taskId === taskDragged) {
+          task.taskStatus = newStatus;
+        }
+      }
+      localStorage.setItem("tasks", JSON.stringify(taskInv));
+    },
+  });
+}
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
