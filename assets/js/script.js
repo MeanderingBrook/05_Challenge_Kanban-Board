@@ -17,7 +17,7 @@ function generateTaskId() {
 // Todo: create a function to create a task card
 function createTaskCard(task) {
   // Set Constant for target HTML Element to which Tasks will be added
-  const targetDiv = document.getElementById("to-do");
+  // const targetDiv = document.getElementById("to-do"); // 6-20
 
   let taskIDNode = task.taskId;
   let taskTitleNode = task.taskTitle;
@@ -29,21 +29,8 @@ function createTaskCard(task) {
   const taskDiv = document.createElement("div");
   taskDiv.classList.add("task-card");
   taskDiv.setAttribute("id", taskIDNode);
-  targetDiv.appendChild(taskDiv);
+  // targetDiv.appendChild(taskDiv);
   // << Task Container
-
-  // Compares Task Date and Current Date to flag Task Tardiness (Green - Yellow - Red)
-  let currentDate = new Date().setHours(0, 0, 0, 0);
-  let taskDateFormatted = new Date(task.taskDate).setHours(0, 0, 0, 0);
-
-  // Task is Late (Red)
-  if (currentDate == (taskDateFormatted, "day")) {
-    taskDiv.classList.add("task-card-warning");
-  } else if (currentDate > taskDateFormatted) {
-    taskDiv.classList.add("task-card-late");
-  } else {
-    taskDiv.classList.add("task-card-ontime");
-  }
 
   // Task ID >>
   // Creates <div> to hold Task - ID
@@ -131,6 +118,19 @@ function createTaskCard(task) {
   taskDiv.appendChild(taskDeleteBtn);
   // << Task Delete Button
 
+  // Compares Task Date and Current Date to flag Task Tardiness (Green - Yellow - Red)
+  let currentDate = new Date().setHours(0, 0, 0, 0);
+  let taskDateFormatted = new Date(task.taskDate).setHours(0, 0, 0, 0);
+
+  // Task is Late (Red)
+  if (currentDate == (taskDateFormatted, "day")) {
+    taskDiv.classList.add("task-card-warning");
+  } else if (currentDate > taskDateFormatted) {
+    taskDiv.classList.add("task-card-late");
+  } else {
+    taskDiv.classList.add("task-card-ontime");
+  }
+
   //
   // !!!! Refresh To-Do List with new Task !!!!!!
   //
@@ -153,54 +153,82 @@ function createTaskCard(task) {
   // $("#todo-cards").hide().fadeIn("fast");
 
   // $("#todo-cards").load(document.'index.html' + " #todo-cards > *");
-  return task;
+  // return task;  // 6-20
+  return taskDiv;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 // Reference: https://www.w3schools.com/howto/howto_js_draggable.asp
 function renderTaskList() {
-  // Creates <div> for each Task Object, and adds to To-Do swimlane
-  taskList.forEach(createTaskCard);
+  const todoList = $("#to-do");
+  todoList.empty();
 
-  // JQuery: Makes Task Cards draggable and records Card position after 'Drag: Stop' event
-  $(".task-card").draggable({
-    snap: ".card",
-    stack: ".task-card",
-    distance: 0,
-    stop: function (event, ui) {
-      // alert(this.id);
-      console.log(ui.position);
+  const inProgressList = $("#in-progress");
+  inProgressList.empty();
 
-      let taskInv = taskList;
-      console.log(taskInv);
+  const doneList = $("#done");
+  doneList.empty();
 
-      let taskDragged = this.id;
-      // console.log(taskDragged);
+  for (let task of taskList) {
+    if (task.taskStatus === "to-do") {
+      todoList.append(createTaskCard(task));
+    } else if (task.taskStatus === "in-progress") {
+      inProgressList.append(createTaskCard(task));
+    } else if (task.taskStatus === "done") {
+      doneList.append(createTaskCard(task));
+    }
+  }
 
-      let divPosition = $(this).position();
-      // console.log(divPosition);
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  // // Creates <div> for each Task Object, and adds to To-Do swimlane
+  // taskList.forEach(createTaskCard);
 
-      let posLeft = divPosition.left;
-      // console.log(posLeft);
+  // // JQuery: Makes Task Cards draggable and records Card position after 'Drag: Stop' event
+  // $(".task-card").draggable({
+  //   snap: ".card",
+  //   stack: ".task-card",
+  //   distance: 0,
+  //   stop: function (event, ui) {
+  //     // alert(this.id);
+  //     console.log(ui.position);
 
-      let posTop = divPosition.top;
-      // console.log(posTop);
+  //     let taskInv = taskList;
+  //     console.log(taskInv);
 
-      // Determine dragged Task Index
-      taskIndex = taskInv.findIndex((obj) => obj.taskId == taskDragged);
-      // console.log(taskIndex);
+  //     let taskDragged = this.id;
+  //     // console.log(taskDragged);
 
-      // Upate dragged Task Position - Top
-      taskInv[taskIndex].taskPositionTop = posTop;
-      // console.log(taskInv[taskIndex].taskPositionTop);
+  //     let divPosition = $(this).position();
+  //     // console.log(divPosition);
 
-      // Upate dragged Task Position - Left
-      taskInv[taskIndex].taskPositionLeft = posLeft;
-      // console.log(taskInv[taskIndex].taskPositionLeft);
+  //     let posLeft = divPosition.left;
+  //     // console.log(posLeft);
 
-      localStorage.setItem("tasks", JSON.stringify(taskInv));
-    },
-  });
+  //     let posTop = divPosition.top;
+  //     // console.log(posTop);
+
+  //     // Determine dragged Task Index
+  //     taskIndex = taskInv.findIndex((obj) => obj.taskId == taskDragged);
+  //     // console.log(taskIndex);
+
+  //     // Upate dragged Task Position - Top
+  //     taskInv[taskIndex].taskPositionTop = posTop;
+  //     // console.log(taskInv[taskIndex].taskPositionTop);
+
+  //     // Upate dragged Task Position - Left
+  //     taskInv[taskIndex].taskPositionLeft = posLeft;
+  //     // console.log(taskInv[taskIndex].taskPositionLeft);
+
+  //     localStorage.setItem("tasks", JSON.stringify(taskInv));
+  //   },
+  // });
 }
 
 // Open 'Add Task' Modal Dialog box (Custom Function)
