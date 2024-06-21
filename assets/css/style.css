@@ -32,6 +32,21 @@ body {
   cursor: grab;
 }
 
+.task-card-ontime {
+  background-color: rgba(225, 255, 225, 0.50);
+  color: green;
+}
+
+.task-card-warning {
+  background-color: rgb(255, 234, 196);
+}
+
+
+.task-card-late {
+  background-color: rgb(255, 0, 0,1.0);
+  color: rgb(255, 255, 255);
+}
+
 
 /* "Add Task" MODAL DIALOG */
 
