@@ -1,405 +1,143 @@
 // Retrieve tasks and nextId from localStorage
-// GIVEN CODE - THIS DIDNT WORK UNTIL I INSTANTIATED BLANK ARRAY:
+// Given Code: Did not function until function was created to generate blank Array (taskList) as needed !!!
 // let taskList = JSON.parse(localStorage.getItem("tasks"));
 let taskList = localStorage.getItem("tasks")
   ? JSON.parse(localStorage.getItem("tasks"))
   : [];
-
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-  var taskID = "id" + Math.random().toString(16).slice(2);
+  let taskID = "id" + Math.random().toString(16).slice(2);
   console.log(taskID);
   return taskID;
 }
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-  // Set Constant for target HTML Element to which Tasks will be added
-  // const targetDiv = document.getElementById("to-do"); // 6-20
+  const taskCard = $("<div>")
+    .addClass("card project-card draggable my-3")
+    .attr("data-project-id", task.id);
+  const cardHeader = $("<div>").addClass("card-header h4").text(task.name);
+  const cardBody = $("<div>").addClass("card-body");
+  const cardDescription = $("<p>").addClass("card-text").text(task.type);
+  const cardDueDate = $("<p>").addClass("card-text").text(text.dueDate);
+  const cardDeleteBtn = $("<button>")
+    .addClass("btn btn-danger delete")
+    .text("Delete")
+    .attr("data-project-id", task.id);
+  cardDeleteBtn.on("click", handleDeleteTask); // No Parentheses () Required !!!
 
-  let taskIDNode = task.taskId;
-  let taskTitleNode = task.taskTitle;
-  let taskDateNode = task.taskDate;
-  let taskDescrNode = task.taskDescr;
+  // Applies Task Card color-coding (Red - Yellow) based on Task tardiness (Late, Due) if Task is not 'Done'
+  if (task.dueDate && task.status !== "done") {
+    const currentDate = dayjs();
+    const taskDueDate = dayjs(task.dueDate, "DD/MM/YYYY");
 
-  // Task Container >>
-  // Creates (no-content) <div> to hold individual Tasks
-  const taskDiv = document.createElement("div");
-  taskDiv.classList.add("task-card");
-  taskDiv.setAttribute("id", taskIDNode);
-  // targetDiv.appendChild(taskDiv);
-  // << Task Container
-
-  // Task ID >>
-  // Creates <div> to hold Task - ID
-  const taskIDDiv = document.createElement("div");
-  taskIDDiv.classList.add("elementDiv");
-  taskDiv.appendChild(taskIDDiv);
-
-  // Creates <h4> to hold Task - ID ("Task ID")
-  const taskIDHeader = document.createElement("h4");
-  taskIDHeader.classList.add("idHeader");
-  taskIDHeader.textContent = "Task ID";
-  taskIDDiv.appendChild(taskIDHeader);
-
-  // Creates <p> to hold Task - ID (Auto-Generated)
-  const taskIDPara = document.createElement("p");
-  taskIDPara.textContent = taskIDNode;
-  taskIDDiv.appendChild(taskIDPara);
-  // << Task ID
-
-  // Task Title >>
-  // Creates <div> to hold Task - Title
-  const taskTitleDiv = document.createElement("div");
-  taskTitleDiv.classList.add("elementDiv");
-  // taskTitleDiv.setAttribute("id", "taskTitleDiv");
-  taskDiv.appendChild(taskTitleDiv);
-
-  // Creates <h4> to hold Task - Title ("Task Title")
-  const taskTitleHeader = document.createElement("h4");
-  taskTitleHeader.classList.add("titleHeader");
-  // postTitleHeader.setAttribute("id", "postTitleHeader");
-  taskTitleHeader.textContent = "Task Title";
-  taskTitleDiv.appendChild(taskTitleHeader);
-
-  // Creates <p> to hold Task - Title (User Content)
-  const taskTitlePara = document.createElement("p");
-  taskTitlePara.textContent = taskTitleNode;
-  taskTitleDiv.appendChild(taskTitlePara);
-  // << Task Title
-
-  // Task Date >>
-  // Creates <div> to hold Task - Date
-  const taskDateDiv = document.createElement("div");
-  taskDateDiv.classList.add("elementDiv");
-  // taskDateDiv.setAttribute("id", "taskDateDiv");
-  taskDiv.appendChild(taskDateDiv);
-
-  // Creates <h4> to hold Task - Date ("Task Date")
-  const taskDateHeader = document.createElement("h4");
-  taskDateHeader.classList.add("dateHeader");
-  // postContentHeader.setAttribute("id", "postContentHeader");
-  taskDateHeader.textContent = "Task Date";
-  taskDateDiv.appendChild(taskDateHeader);
-
-  // Creates <p> to hold Task - Date (User Content)
-  const taskDatePara = document.createElement("p");
-  taskDatePara.textContent = taskDateNode;
-  taskDateDiv.appendChild(taskDatePara);
-  // << Task Date
-
-  // Task Description >>
-  // Creates <div> to hold Task - Description
-  const taskDescrDiv = document.createElement("div");
-  taskDescrDiv.classList.add("elementDiv");
-  // taskDescrDiv.setAttribute("id", "taskDescrDiv");
-  taskDiv.appendChild(taskDescrDiv);
-
-  // Creates <h4> to hold Task - Description ("Description")
-  const taskDescrHeader = document.createElement("h4");
-  taskDescrHeader.classList.add("descrHeader");
-  // userNameHeader.setAttribute("id", "userNameHeader");
-  taskDescrHeader.textContent = "Description";
-  taskDescrDiv.appendChild(taskDescrHeader);
-
-  // Creates <p> to hold Task - Description (User Content)
-  const taskDescrPara = document.createElement("p");
-  taskDescrPara.textContent = taskDescrNode;
-  taskDescrDiv.appendChild(taskDescrPara);
-  // << Task Description
-
-  // Task Delete Button >>
-  const taskDeleteBtn = document.createElement("button");
-  taskDeleteBtn.setAttribute("id", taskIDNode);
-  taskDeleteBtn.textContent = "Delete";
-  taskDeleteBtn.addEventListener("click", handleDeleteTask); // Removing () from Function Name allows it to work !!!!!!!!
-  taskDiv.appendChild(taskDeleteBtn);
-  // << Task Delete Button
-
-  // Compares Task Date and Current Date to flag Task Tardiness (Green - Yellow - Red)
-  let currentDate = new Date().setHours(0, 0, 0, 0);
-  let taskDateFormatted = new Date(task.taskDate).setHours(0, 0, 0, 0);
-
-  // Task is Late (Red)
-  if (currentDate == (taskDateFormatted, "day")) {
-    taskDiv.classList.add("task-card-warning");
-  } else if (currentDate > taskDateFormatted) {
-    taskDiv.classList.add("task-card-late");
-  } else {
-    taskDiv.classList.add("task-card-ontime");
+    // Tasks due 'Today' (currentDay) are colored Yellow
+    if (currentDate.isSame(taskDueDate, "day")) {
+      taskCard.addClass("bg-warning text-white");
+      // Tasks due in the past are colored Red
+    } else if (currentDate.isAfter(taskDueDate)) {
+      taskCard.addClass("bg-danger text-white");
+      cardDeleteBtn.addClass("border-light");
+    }
   }
 
-  //
-  // !!!! Refresh To-Do List with new Task !!!!!!
-  //
-  // $("#to-do").load(location.href + " #to-do");
+  // Aggregates 'Task Card' HTML Elements and Appends them to correct Parent Element
+  cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+  taskCard.append(cardHeader, cardBody);
 
-  // function updateDiv() {
-  //   // $("#here").load(window.location.href + " #here");
-  //   // $("#todo-cards").load(document.'/index.html' + " #todo-cards > *");
-  //   // $("#todo-cards").load(location.index.html + " #todo-cards >*", "");
-
-  //   url: "./index.html";
-  //   $("#to-do").load(document.url + " #to-do > *");
-  // }
-
-  // url: "./index.html";
-  // $("#to-do").load(document.url + " #to-do > *");
-
-  // $("#todo-cards").load("./index.html");
-
-  // $("#todo-cards").hide().fadeIn("fast");
-
-  // $("#todo-cards").load(document.'index.html' + " #todo-cards > *");
-  // return task;  // 6-20
-  return taskDiv;
+  // Returns Task Card to be rendered on Kanban Board based upon Progress, to correct Swim Lane (e.g., In Progress, Done)
+  return taskCard;
 }
 
 // Todo: create a function to render the task list and make cards draggable
-// Reference: https://www.w3schools.com/howto/howto_js_draggable.asp
 function renderTaskList() {
-  const todoList = $("#to-do");
-  todoList.empty();
+  // Clear Task Swim Lanes (HTML) of previously-created Task Cards >>
+  const todoTasks = $("#to-do");
+  todoTasks.empty();
 
-  const inProgressList = $("#in-progress");
-  inProgressList.empty();
+  const inProgressTasks = $("#in-progress");
+  inProgressTasks.empty();
 
-  const doneList = $("#done");
-  doneList.empty();
+  const doneTasks = $("#done");
+  doneTasks.empty();
+  // << Clear Task Swim Lanes
 
-  for (let task of taskList) {
-    if (task.taskStatus === "to-do") {
-      todoList.append(createTaskCard(task));
-    } else if (task.taskStatus === "in-progress") {
-      inProgressList.append(createTaskCard(task));
-    } else if (task.taskStatus === "done") {
-      doneList.append(createTaskCard(task));
+  // Evaluates each Task from Task Array (taskArray) to determine appropriate Task Swim Lane (HTML) and generate Task Cards and appends to correct Lane using Lane ID
+  taskList.forEach((task, status) => {
+    if (task.status === "to-do") {
+      todoTasks.append(createTaskCard(task));
+    } else if (task.status === "in-progress") {
+      inProgressTasks.append(createTaskCard(task));
+    } else if (task.status === "done") {
+      doneTasks.append(createTaskCard(task));
     }
-  }
+  });
 
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  // // Creates <div> for each Task Object, and adds to To-Do swimlane
-  // taskList.forEach(createTaskCard);
-
-  // // JQuery: Makes Task Cards draggable and records Card position after 'Drag: Stop' event
-  // $(".task-card").draggable({
-  //   snap: ".card",
-  //   stack: ".task-card",
-  //   distance: 0,
-  //   stop: function (event, ui) {
-  //     // alert(this.id);
-  //     console.log(ui.position);
-
-  //     let taskInv = taskList;
-  //     console.log(taskInv);
-
-  //     let taskDragged = this.id;
-  //     // console.log(taskDragged);
-
-  //     let divPosition = $(this).position();
-  //     // console.log(divPosition);
-
-  //     let posLeft = divPosition.left;
-  //     // console.log(posLeft);
-
-  //     let posTop = divPosition.top;
-  //     // console.log(posTop);
-
-  //     // Determine dragged Task Index
-  //     taskIndex = taskInv.findIndex((obj) => obj.taskId == taskDragged);
-  //     // console.log(taskIndex);
-
-  //     // Upate dragged Task Position - Top
-  //     taskInv[taskIndex].taskPositionTop = posTop;
-  //     // console.log(taskInv[taskIndex].taskPositionTop);
-
-  //     // Upate dragged Task Position - Left
-  //     taskInv[taskIndex].taskPositionLeft = posLeft;
-  //     // console.log(taskInv[taskIndex].taskPositionLeft);
-
-  //     localStorage.setItem("tasks", JSON.stringify(taskInv));
-  //   },
-  // });
-}
-
-// Open 'Add Task' Modal Dialog box (Custom Function)
-function openTaskModal() {
-  // Sets Reference defining "Add Task" Modal Dialog (<div>)
-  const addTaskModal = document.getElementById("addTaskDialog");
-
-  // Sets Reference defining "Add Task" Button activating Modal Dialog (<button>)
-  const addTaskBtn = document.getElementById("modalBtn");
-
-  // Sets Reference defining "X" icon closing Modal Dialog (<span>)
-  const addTaskClose = document.getElementsByClassName("close-modal")[0];
-
-  addTaskModal.style.display = "block";
-
-  // "Closes" Modal Dialog Box using "X" icon - Display: None
-  addTaskClose.onclick = function () {
-    addTaskModal.style.display = "none";
-  };
-
-  // "Closes" Modal Dialog Box on-click outside of Box  - Display: None
-  window.onclick = function (event) {
-    if (event.target == addTaskModal) {
-      addTaskModal.style.display = "none";
-    }
-  };
-}
-
-// Todo: create a function to handle adding a new task
-function handleAddTask(event) {
-  // event.preventDefaul();
-
-  newTask = {}; // Temporary Object to hold Task inputs (Title, Date, Description)
-  console.log(newTask);
-
-  // Sets Reference defining "Add Task" Modal Dialog (<div>)
-  const addTaskModal = document.getElementById("addTaskDialog");
-
-  // Sets Reference defining "Add Task (Submit)" Button activating Modal Dialog (<button>)
-  const submitBtn = document.getElementById("submitBtn");
-
-  // Calls generateTaskId() to create unique Task ID (taskID) and stores returned value
-  let autoTaskID = generateTaskId();
-
-  // Assigns generated Task ID to Temporary Object to be added to Local Storage
-  newTask.taskId = autoTaskID;
-  console.log(newTask.taskid);
-
-  // Create Object Element to indicate if Task is active or complete
-  let taskStat = "to-do";
-
-  // Assigns Task Status to to Temporary Object to be added to Local Storage
-  newTask.taskStatus = taskStat;
-
-  // Creates Object Elements to later store draggable <div> position
-  let taskPosTop = 0;
-  let taskPosLeft = 0;
-
-  // Assigns placeholder Task Position to Temporary Object to be added to Local Storage
-  newTask.taskPositionTop = taskPosTop;
-  newTask.taskPositionLeft = taskPosLeft;
-
-  // Constants to hold User Input to be added to Local Storage
-  const inputTaskTitle = document.getElementById("tasktitle");
-  const inputTaskDate = document.getElementById("taskdate");
-  const inputTaskDescr = document.getElementById("taskdescr");
-
-  // Assign User Input values to Temporary Object
-  newTask.taskTitle = inputTaskTitle.value;
-  console.log(newTask.taskTitle);
-
-  newTask.taskDate = inputTaskDate.value;
-  console.log(newTask.taskDate);
-
-  newTask.taskDescr = inputTaskDescr.value;
-  console.log(newTask.taskDescr);
-
-  console.log(newTask);
-
-  // Validation confirms Task Form is complete, else Alert
-  if (
-    newTask.taskId &&
-    newTask.taskTitle &&
-    newTask.taskDate &&
-    newTask.taskDescr
-  ) {
-    // Adds new Task inputs to taskList
-    taskList.push(newTask);
-    console.log(taskList);
-
-    // Adds values of taskList to Local Storage
-    localStorage.setItem("tasks", JSON.stringify(taskList));
-
-    // Clears User Input values already pushed to Array
-    autoTaskID = "";
-    taskStat = "";
-    taskPosTop = "";
-    taskPosLeft = "";
-    inputTaskTitle.value = "";
-    inputTaskDate.value = "";
-    inputTaskDescr.value = "";
-
-    // "Closes" Modal Dialog Box on Submit - Display: None
-    addTaskModal.style.display = "none";
-
-    // Calls createTaskCard() to generate Task Card for new Task
-    createTaskCard();
-  } else {
-    alert("All Fields are Required. Please fully complete the Task Form.");
-    return false;
-  }
-
-  // renderTaskList();
-  // window.location.href = window.location.href; // !!!! WHY THIS KLUDGEY WORKAROUND ???? !!!!!!!
-}
-
-// Todo: create a function to handle deleting a task
-// function handleDeleteTask(event) {  // WHY EVENT ???!!!!!!!!
-function handleDeleteTask(id) {
-  // alert(this.id);
-
-  var taskInv = taskList;
-  // console.log(taskInv);
-
-  var taskDel = this.id;
-  // console.log(taskDel);
-
-  // Superseded in favor of Filter Method
-  // for (var i = 0; i < taskInv.length; i++) {
-  //   if (taskInv[i].taskId == taskDel) {
-  //     taskInv.splice(i, 1);
-  //   }
-  // }
-
-  taskInv = taskInv.filter((task) => task.taskId !== taskDel);
-
-  localStorage.setItem("tasks", JSON.stringify(taskInv));
-
-  // renderTaskList();
-  // location.reload();
-  window.location.href = window.location.href; // !!!! WHY THIS KLUDGEY WORKAROUND ???? !!!!!!!
-}
-
-// Todo: create a function to handle dropping a task into a new status lane
-function handleDrop(event, ui) {
-  $(".task-card").draggable({
-    snap: ".card",
-    stack: ".task-card",
-    distance: 0,
-    stop: function (event, ui) {
-      const taskInv = taskList;
-      // console.log(taskInv);
-      const taskDragged = this.id;
-      // console.log(taskDragged);
-      const divPosition = $(this).position();
-      // console.log(divPosition);
-      // Determine dragged Task Index
-      taskIndex = taskInv.findIndex((obj) => obj.taskId == taskDragged);
-      const newStatus = event.target.id;
-
-      for (let task of taskInv) {
-        if (task.taskId === taskDragged) {
-          task.taskStatus = newStatus;
-        }
-      }
-      localStorage.setItem("tasks", JSON.stringify(taskInv));
+  $(".draggable").draggable({
+    opacity: 0.7,
+    zIndex: 100,
+    // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
+    helper: function (e) {
+      // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
+      const original = $(e.target).hasClass("ui-draggable")
+        ? $(e.target)
+        : $(e.target).closest(".ui-draggable");
+      // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
+      return original.clone().css({
+        width: original.outerWidth(),
+      });
     },
   });
 }
 
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {
+// Todo: create a function to handle adding a new task
+function handleAddTask(event) {}
+
+// Todo: create a function to handle deleting a task
+function handleDeleteTask(event) {
+  // Constant holding target Task to be Deleted
+  const taskDel = $(this).attr("data-project-id");
+
+  // Local Constant representing Task Array (taskList) maintained in Local Storage (tasks)
+  const taskInv = taskList;
+
+  // Removes target Task to be deleted, using Filter method, from local Task Invetory (taskInv)
+  taskInv = taskInv.filter((task) => task.taskId !== taskDel);
+
+  // Updates Local Storage (tasks) with revised Task Inventory
+  localStorage.setItem("tasks", JSON.stringify(taskInv));
+
+  // Renders updated list of Tasks using existing Function
   renderTaskList();
-});
+}
+
+// Todo: create a function to handle dropping a task into a new status lane
+function handleDrop(event, ui) {
+  // Local Constant representing Task Array (taskList) maintained in Local Storage (tasks)
+  const taskInv = taskList;
+
+  // DONT THINK THAT projectId IS CORRECT !!! WEIRDLY NOT DEFINED IN ORIGINAL CODE IN THIS FUNCTION
+  // Local Constant defining dropped Task
+  const taskDrop = ui.draggable[0].dataset.projectId;
+
+  // Local Constant defining target Swim Lane Task
+  const newStatus = event.target.id;
+
+  for (let task of taskInv) {
+    // ? Find the task card by the `id` and update the task status.
+    if (task.id === taskDrop) {
+      task.status = newStatus;
+    }
+  }
+
+  // Updates Local Storage (tasks) with revised Task Inventory
+  localStorage.setItem("tasks", JSON.stringify(taskInv));
+
+  // Renders updated list of Tasks using existing Function
+  renderTaskList();
+}
+
+// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
+// $(document).ready(function () {});
