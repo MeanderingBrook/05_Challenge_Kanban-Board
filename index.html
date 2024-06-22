@@ -32,9 +32,10 @@
     <div class="add-task-modal" id="addTaskDialog">
     <!-- Modal content -->
       <div class="modal-content">
+        <!-- <div class="modal-content"></div> -->
         <span class="close-modal">&times;</span>
-        <h3 class="modal-header">Add Task</h3>
-        <section class="modal-content">
+        <h2 class="modal-header">Add Task</h2>
+        <section class="modal-field">
           <label for="tasktitle">Task Title</label>
           <input type="text"
                  name="tasktitle"
@@ -42,21 +43,22 @@
                  required
                  min="1"
                  max="40"
-                 placeholder="Required: Enter Task Title (Maximum Characters: 40)">
+                 placeholder="Enter Task Title (Max Characters: 40)">
         </section>
-        <section class="modal-content">
+        <section class="modal-date">
           <label for="taskdate">Task Date</label>
+          <br>
           <input type="date"
                  name="taskdate"
                  id="taskdate"
                  required>
         </section>
-        <section class="modal-content">
+        <section class="modal-field">
           <label for="taskdescr">Task Description</label>
-          <textarea name="taskdescr" id="taskdescr" required minlength="1" maxlength="140" placeholder="Required: Enter Task Description (Maximum Characters: 140)"></textarea>
+          <textarea name="taskdescr" id="taskdescr" required minlength="1" maxlength="140" placeholder="Enter Task Description (Max Characters: 140)"></textarea>
         </section>
         <!-- "Add Task" (Submit) BUTTON -->
-        <section class="text-center mb-5">
+        <section class="text-center submit-button mb-5">
           <button class="btn btn-success" id="submitBtn" onclick="handleAddTask();" style="width: fit-content; display: flex; align-items: center; justify-content: center;">Add Task</button>
         </section>
       </div>
@@ -102,14 +104,12 @@
     crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+  <script src="js/ui/jquery.ui.draggable.js" type="type/javascript"></script>
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
     integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
 
   <script src="./assets/js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script>dayjs().format()</script>
-  <!-- DONT NEED WITH .ready(renderTaskList) -->
-  <!-- <script>$(document).ready(createTaskCard) </script> --> 
-  <!-- <script>$(document).ready(renderTaskList)</script> -->
 </body>
 </html>

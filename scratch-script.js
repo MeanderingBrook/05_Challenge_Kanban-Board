@@ -122,11 +122,14 @@ function createTaskCard(task) {
   let currentDate = new Date().setHours(0, 0, 0, 0);
   let taskDateFormatted = new Date(task.taskDate).setHours(0, 0, 0, 0);
 
-  // Task is Late (Red)
+  // Applies color formatting to Task Card based on Task Tardiness
+  // Task is Due (Yellow)
   if (currentDate == (taskDateFormatted, "day")) {
     taskDiv.classList.add("task-card-warning");
+    // Task is Late (Red)
   } else if (currentDate > taskDateFormatted) {
     taskDiv.classList.add("task-card-late");
+    // Task is On-Time
   } else {
     taskDiv.classList.add("task-card-ontime");
   }

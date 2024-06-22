@@ -15,40 +15,8 @@ body {
   min-height: 60vh;
 }
 
-.task-card {
-  margin: 0 auto;
-  /* margin: 1vh auto;  I TOOK THIS OUT WHEN TRANFERRED HERE */
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
-  border-radius: 10px;
-  border-width: 1px;
-  max-width: 800px;
-  padding: 20px 40px;
-  background-color: rgb(255, 255, 255, 0.90);
-  font-size: 18px;
-  color: rgba(0,0,128,1);
-}
 
-.task-card:hover {
-  cursor: grab;
-}
-
-.task-card-ontime {
-  background-color: rgba(225, 255, 225, 0.50);
-  color: green;
-}
-
-.task-card-warning {
-  background-color: rgb(255, 234, 196);
-}
-
-
-.task-card-late {
-  background-color: rgb(255, 0, 0,1.0);
-  color: rgb(255, 255, 255);
-}
-
-
-/* "Add Task" MODAL DIALOG */
+/* MODAL DIALOG "Add Task" */
 
 .add-task-modal {
   position: fixed; 
@@ -73,10 +41,9 @@ body {
 .modal-content {
   display: flex;
   margin: auto;
-  border: 1px solid rgba(0,212,255,1);
+  border: 1px solid rgb(128, 234, 255);
   border-radius: 10px;
   width: 50%;
-  padding: 20px;
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 127);
 }
@@ -84,31 +51,106 @@ body {
 /* Close ("X") Icon */
 .close-modal {
   float: right;
+  margin-top: 25px;
+  margin-right: 25px;
   font-size: 28px;
   text-align: right;
   font-weight: bold;
-  color: rgb(0, 0, 127);
+  color: rgba(0,191,255, 1.00);
 }
 
 .close-modal:hover,
 .close-modal:focus {
   cursor: pointer;
   text-decoration: none;
-  color: rgba(0,212,255,1);
+  color: rgb(0, 0, 127, 1.00);
 }
 
-/* NOT USED */
-/* .modal-fields {
-  display: flex;
-  flex-direction: row;
-} */
+.modal-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgb(128, 234, 255, 0.75);
+  border-radius: 10px;
+  width: 75%;
+  padding: 20px;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  color: rgb(0, 0, 127);
+}
+
+.modal-field, .modal-date label {
+  font-weight: bold;
+}
+
+.modal-date {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgb(128, 234, 255, 0.75);
+  border-radius: 10px;
+  width: 75%;
+  padding: 20px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 127);
+  text-align: center;
+
+}
+
+/* Modal Input Entry Fields */
+textarea, input {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  outline: none;
+  border-radius: 5px;
+  border-width: 0 0 2px;
+  border-color: rgb(0, 0, 127, 0.75);
+  width: 100%;
+}
+
+::placeholder {
+   text-align: center; 
+}
+
+.modal-date input {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  outline: none;
+  border-radius: 5px;
+  border-width: 0 0 2px;
+  border-color: rgb(0, 0, 127, 0.75);
+  width: 50%;
+}
+
+.submit-button {
+  margin: 20px auto;
+}
+
+
+/* TASK CARDS */
+
+.task-card {
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
+  border-radius: 10px;
+  border-width: 1px;
+  max-width: 800px;
+  padding: 20px 40px;
+  background-color: rgb(255, 255, 255, 0.90);
+  font-size: 18px;
+  color: rgba(0,0,128,1);
+}
+
+.task-card:hover {
+  cursor: grab;
+}
 
 
 /* TASK <div> */
 /* FIX THIS OVERWRITE GIVEN FORMATTING, LIKE BORDERS THOUGH */
 .card {
-  /* position: absolute; */
-  /* z-index: 5000; */
   margin: 1vh auto;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
   border-radius: 10px;
@@ -134,8 +176,35 @@ body {
 }
 
 
-/* SWIM LANES */
+/* TASK CARD TARDINESS */
 
-/* .target-lane {
-  z-index: 500;
-} */
+/* Task Card Status: 'Done' */
+.task-card-done {
+  background-color: rgb(191, 191, 191);
+  color: rgb(0, 0, 0);
+}
+/* Task Card Delete Button Status: 'Done' */
+.delete-btn-done {
+  background-color: rgb(127, 127, 127);
+  color: white;
+  border-color: white;
+}
+
+/* Task Card Tardiness: 'On Time' */
+.task-card-ontime {
+  background-color: rgba(225, 255, 225, 0.75);
+  color: rgb(0, 64, 0);
+}
+
+/* Task Card Tardiness: 'Due Today' */
+.task-card-warning {
+  /* background-color: rgb(255, 234, 196); */
+  background-color: rgb(255, 165, 0, 1.00);
+  color: white;
+}
+
+/* Task Card Tardiness: 'Late' */
+.task-card-late {
+  background-color: rgb(255, 0, 0, 1.00);
+  color: rgb(255, 255, 255);
+}
