@@ -16,15 +16,15 @@
 </head>
 
 <body>
-  <header class="p-4 mb-4 text-center border-bottom border-5">
-    <h1 class="display-3">Task Board</h1>
-    <p class="lead">A simple Kanban board for task management</p>
+  <header class="p-4 mb-4 text-center border-bottom border-5 header-style">
+    <h1 class="display-3">Kanban Task Board</h1>
+    <p class="lead">Visualize Your Workflow and Manage Your Tasks</p>
   </header>
   <div class="container">
     <!-- Container for Add Task Button -->
     <div class="text-center mb-5">
       <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button> -->
-      <button class="btn btn-success" id="modalBtn" onclick="openTaskModal();">Add Task</button>
+      <button class="btn btn-success add-btn" id="modalBtn" onclick="openTaskModal();">Add Task</button>
     </div>
 
     <!-- Todo: Create a modal with a form to add tasks -->
@@ -58,7 +58,7 @@
           <textarea name="taskdescr" id="taskdescr" required minlength="1" maxlength="140" placeholder="Enter Task Description (Max Characters: 140)"></textarea>
         </section>
         <!-- "Add Task" (Submit) BUTTON -->
-        <section class="text-center submit-button mb-5">
+        <section class="text-center submit-btn mb-5">
           <button class="btn btn-success" id="submitBtn" onclick="handleAddTask();" style="width: fit-content; display: flex; align-items: center; justify-content: center;">Add Task</button>
         </section>
       </div>
