@@ -25,8 +25,9 @@ function generateTaskId() {
 // Todo: create a function to create a task card
 function createTaskCard(task) {
   // Formats Task Due Date
-  // let taskDateFormatted = new Date(task.taskDate).toLocaleDateString();
 
+  // Superseded in favor of dayjs functionality
+  // let taskDateFormatted = new Date(task.taskDate).toLocaleDateString();
   // JavaScript Data Management issues must be corrected: https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
   // let taskDateFormatted = new Date(
   //   task.taskDate.replace(/-/g, "/").replace(/T.+/, "")
@@ -44,8 +45,11 @@ function createTaskCard(task) {
   const cardDescription = $("<p>").addClass("card-text").text(task.taskDescr);
   const cardDueDateHeader = $("<h5>").text("Task Due Date:");
   const cardDueDate = $("<p>").addClass("card-text").text(taskDateFormatted);
+  const cardIdContainer = $("<div>").addClass("card-id-container");
+  const cardIdHeader = $("<p>").addClass("card-id-header").text("Task ID: ");
+  const cardId = $("<p>").addClass("card-id").text(task.taskId);
   const cardDeleteBtn = $("<button>")
-    .addClass("btn btn-danger delete")
+    .addClass("btn btn-danger delete delete-btn")
     .text("Delete")
     .attr("data-task-id", task.taskId);
   cardDeleteBtn.on("click", handleDeleteTask); // No Parentheses () Required !!!
@@ -74,31 +78,15 @@ function createTaskCard(task) {
     }
   }
 
-  // Compares Task Date and Current Date to flag Task Tardiness (Green - Yellow - Red) >>
-  // Defines Current Date to compare to Task Due Date
-  // const currentDate = dayjs().format("MM/DD/YYYY");
-  // let taskDueDate = new Date(task.taskDate);
-
-  // // Applies color formatting to Task Card based on Task Tardiness
-  // // Task is Due (Yellow)
-  // if (currentDate == (taskDueDate, "day")) {
-  //   taskCard.addClass("task-card-warning");
-  //   // Task is Late (Red)
-  // } else if (currentDate > taskDueDate) {
-  //   taskCard.addClass("task-card-late");
-  //   // Task is On-Time
-  // } else {
-  //   taskCard.addClass("task-card-ontime");
-  // }
-  // << Compares Task Date and Current Date
-
   // Aggregates 'Task Card' HTML Elements and Appends them to correct Parent Element
+  cardIdContainer.append(cardIdHeader, cardId);
   cardBody.append(
     cardDescrHeader,
     cardDescription,
     cardDueDateHeader,
     cardDueDate,
-    cardDeleteBtn
+    cardDeleteBtn,
+    cardIdContainer
   );
   taskCard.append(cardHeader, cardBody);
 
@@ -111,15 +99,26 @@ function renderTaskList() {
   taskInv = refreshTaskList();
 
   // Clear Task Swim Lanes (HTML) of previously-created Task Cards >>
-  const todoTasks = $("#to-do");
+  const todoTasks = $("#todo-cards");
   todoTasks.empty();
 
-  const inProgressTasks = $("#in-progress");
+  const inProgressTasks = $("#in-progress-cards");
   inProgressTasks.empty();
 
-  const doneTasks = $("#done");
+  const doneTasks = $("#done-cards");
   doneTasks.empty();
   // << Clear Task Swim Lanes
+
+  // Superseded in favor of forEach
+  // for (let task of taskInv) {
+  //   if (task.taskStatus === "to-do") {
+  //     todoTasks.append(createTaskCard(task));
+  //   } else if (task.taskStatus === "in-progress") {
+  //     inProgressTasks.append(createTaskCard(task));
+  //   } else if (task.taskStatus === "done") {
+  //     doneTasks.append(createTaskCard(task));
+  //   }
+  // }
 
   // Evaluates each Task from Task Array (taskArray) to determine appropriate Task Swim Lane (HTML) and generate Task Cards and appends to correct Lane using Lane ID
   taskInv.forEach((task, status) => {
@@ -131,16 +130,6 @@ function renderTaskList() {
       doneTasks.append(createTaskCard(task));
     }
   });
-
-  // for (let task of taskInv) {
-  //   if (task.taskStatus === "to-do") {
-  //     todoTasks.append(createTaskCard(task));
-  //   } else if (task.taskStatus === "in-progress") {
-  //     inProgressTasks.append(createTaskCard(task));
-  //   } else if (task.taskStatus === "done") {
-  //     doneTasks.append(createTaskCard(task));
-  //   }
-  // }
 
   $(".draggable").draggable({
     opacity: 0.7,
@@ -298,7 +287,6 @@ function handleDrop(event, ui) {
 
   let taskId = $(this).attr("data-task-id");
 
-  // DONT THINK THAT projectId IS CORRECT !!! WEIRDLY NOT DEFINED IN ORIGINAL CODE IN THIS FUNCTION
   // HOW DOES THIS EVEN WORK ??? !!!
   // Local Constant defining dropped Task
   const taskDrop = ui.draggable[0].dataset.taskId;
