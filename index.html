@@ -21,9 +21,8 @@
     <p class="lead">Visualize Your Workflow and Manage Your Tasks</p>
   </header>
   <div class="container">
-    <!-- Container for Add Task Button -->
+    <!-- Container for Add Task Button (Open Modal Dialogue Box) -->
     <div class="text-center mb-5">
-      <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button> -->
       <button class="btn btn-success add-btn" id="modalBtn" onclick="openTaskModal();">Add Task</button>
     </div>
 
@@ -32,9 +31,10 @@
     <div class="add-task-modal" id="addTaskDialog">
     <!-- Modal content -->
       <div class="modal-content">
-        <!-- <div class="modal-content"></div> -->
+        <!-- Close Modal Dialogue -->
         <span class="close-modal">&times;</span>
         <h2 class="modal-header">Add Task</h2>
+        <!-- Modal Data Field: Task Title -->
         <section class="modal-field">
           <label for="tasktitle">Task Title</label>
           <input type="text"
@@ -45,6 +45,7 @@
                  max="40"
                  placeholder="Enter Task Title (Max Characters: 40)">
         </section>
+        <!-- Modal Data Field: Task Date -->
         <section class="modal-date">
           <label for="taskdate">Task Date</label>
           <br>
@@ -53,6 +54,7 @@
                  id="taskdate"
                  required>
         </section>
+        <!-- Modal Data Field: Task Description -->
         <section class="modal-field">
           <label for="taskdescr">Task Description</label>
           <textarea name="taskdescr" id="taskdescr" required minlength="1" maxlength="140" placeholder="Enter Task Description (Max Characters: 140)"></textarea>

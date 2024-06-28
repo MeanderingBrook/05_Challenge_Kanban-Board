@@ -109,7 +109,7 @@ JavaScript-created Kanban Board presentation of Task entries as &lt;ul&gt; to co
 
 ## GitHub Pages Location
 
-https://meanderingbrook.github.io/04_Challenge_Personal-Blog/
+https://meanderingbrook.github.io/05_Challenge_Kanban-Board/
 
 
 ## Application Screenshots
