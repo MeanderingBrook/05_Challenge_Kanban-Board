@@ -1,23 +1,24 @@
 // Retrieve tasks and nextId from localStorage
 
 function refreshTaskList() {
-  // Given Code: Did not function until function was created to generate blank Array (taskList) as needed !!!
+  // Given Code was Superseded by Storage Call below: Starter Code did not function until function was created to generate blank Array (taskList) as needed
   // let taskList = JSON.parse(localStorage.getItem("tasks"));
 
-  let taskList = localStorage.getItem("tasks")
+  // Initiates Object ('taskList') to hold Local Storage ('tasks') data
+  const taskList = localStorage.getItem("tasks")
     ? JSON.parse(localStorage.getItem("tasks"))
     : [];
 
-  // Surfaces current Task Inventory for use by other Functions
+  // Returns current Task Inventory for use by other Functions
   return taskList;
 }
 
-// WHAT IS THIS FOR ??? !!!
-let nextId = JSON.parse(localStorage.getItem("nextId"));
+// Starter Code, Not Employed
+const nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-  let taskID = "id" + Math.random().toString(16).slice(2);
+  const taskID = "id" + Math.random().toString(16).slice(2);
   // console.log(taskID);
   return taskID;
 }
@@ -26,15 +27,8 @@ function generateTaskId() {
 function createTaskCard(task) {
   // Formats Task Due Date
 
-  // Superseded in favor of dayjs functionality
-  // let taskDateFormatted = new Date(task.taskDate).toLocaleDateString();
-  // JavaScript Data Management issues must be corrected: https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
-  // let taskDateFormatted = new Date(
-  //   task.taskDate.replace(/-/g, "/").replace(/T.+/, "")
-  // );
-
   // Formats (and corrects JavaScript Date issues) Task Due Date
-  let taskDateFormatted = dayjs(task.taskDate).format("MM/DD/YYYY");
+  const taskDateFormatted = dayjs(task.taskDate).format("MM/DD/YYYY");
 
   const taskCard = $("<div>")
     .addClass("card project-card draggable my-3")
@@ -109,7 +103,7 @@ function renderTaskList() {
   doneTasks.empty();
   // << Clear Task Swim Lanes
 
-  // Superseded in favor of forEach
+  // Superseded in favor of forEach (beginning Line 117)
   // for (let task of taskInv) {
   //   if (task.taskStatus === "to-do") {
   //     todoTasks.append(createTaskCard(task));
@@ -131,16 +125,15 @@ function renderTaskList() {
     }
   });
 
+  // JQery Method, permits Task Cards to be 'dragged' between Swim Lanes
   $(".draggable").draggable({
     opacity: 0.7,
     zIndex: 100,
-    // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
+    // Creates image of dragged Object (Task Card)
     helper: function (e) {
-      // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
       const original = $(e.target).hasClass("ui-draggable")
         ? $(e.target)
         : $(e.target).closest(".ui-draggable");
-      // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
       return original.clone().css({
         width: original.outerWidth(),
       });
@@ -186,7 +179,6 @@ function handleAddTask(event) {
   // Sets Reference defining "Add Task" Modal Dialog (<div>) to "Close" it automatically at end of Task creation
   const addTaskModal = document.getElementById("addTaskDialog");
 
-  // WHAT DID USE THIS FOR ??? !!!
   // Sets Reference defining "Add Task (Submit)" Button activating Modal Dialog (<button>)
   const submitBtn = document.getElementById("submitBtn");
 
@@ -232,10 +224,6 @@ function handleAddTask(event) {
     // "Closes" Modal Dialog Box on Submit - Display: None
     addTaskModal.style.display = "none";
 
-    // NOT REQUIRED NOW - CALLED BY renderTaskList !!!
-    // Calls createTaskCard() to generate Task Card for new Task
-    // createTaskCard();
-
     // Renders all Tasks, including new Task
     renderTaskList();
 
@@ -256,22 +244,22 @@ function handleAddTask(event) {
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event) {
   // Constant holding target Task to be Deleted
-  const taskDel = $(this).attr("data-task-id");
-  // console.log(taskDel);
+  const taskDelete = $(this).attr("data-task-id");
+  // console.log(taskDelete);
 
   // Local Variable representing Task Array (taskList) maintained in Local Storage (tasks)
   let taskInv = refreshTaskList();
   // console.log(taskInv);
 
-  // Superseded in favor of Filter Method
+  // Superseded in favor of Filter Method (beginning Line 265)
   // taskInv.forEach((task) => {
-  //   if (task.taskId === taskDel) {
+  //   if (task.taskId === taskDelete) {
   //     taskInv.splice(taskInv.indexOf(task), 1);
   //   }
   // });
 
   // Removes target Task to be deleted, using Filter method, from local Task Invetory (taskInv)
-  taskInv = taskInv.filter((task) => task.taskId !== taskDel);
+  taskInv = taskInv.filter((task) => task.taskId !== taskDelete);
 
   // Updates Local Storage (tasks) with revised Task Inventory
   localStorage.setItem("tasks", JSON.stringify(taskInv));
@@ -285,9 +273,8 @@ function handleDrop(event, ui) {
   // Local Constant representing Task Array (taskList) maintained in Local Storage (tasks)
   const taskInv = refreshTaskList();
 
-  let taskId = $(this).attr("data-task-id");
+  const taskId = $(this).attr("data-task-id");
 
-  // HOW DOES THIS EVEN WORK ??? !!!
   // Local Constant defining dropped Task
   const taskDrop = ui.draggable[0].dataset.taskId;
 
@@ -312,7 +299,7 @@ $(document).ready(function () {
   // Populates Kanban Board with current Tasks, taken from Local Storage
   renderTaskList();
 
-  // ? Make lanes droppable
+  // Swim Lanes accept 'draggable' Task Cards as 'droppable'
   $(".lane").droppable({
     accept: ".draggable",
     drop: handleDrop,

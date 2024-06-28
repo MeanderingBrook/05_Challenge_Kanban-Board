@@ -51,7 +51,7 @@ header {
   color:rgb(0, 0, 127);
 }
 
-/* Content Box */
+/* Modal Content Box */
 .modal-content {
   display: flex;
   margin: auto;
@@ -62,7 +62,7 @@ header {
   color: rgb(0, 0, 127);
 }
 
-/* Close ("X") Icon */
+/* Modal Close ("X") Icon */
 .close-modal {
   float: right;
   margin-top: 25px;
