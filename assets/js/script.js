@@ -1,7 +1,7 @@
 // Retrieve tasks and nextId from localStorage
 
 function refreshTaskList() {
-  // Given Code was Superseded by Storage Call below: Starter Code did not function until function was created to generate blank Array (taskList) as needed
+  // Given Starter Code was Superseded by Storage Call below: Starter Code did not function until function was created to generate blank Array (taskList) as needed
   // let taskList = JSON.parse(localStorage.getItem("tasks"));
 
   // Initiates Object ('taskList') to hold Local Storage ('tasks') data
@@ -13,7 +13,7 @@ function refreshTaskList() {
   return taskList;
 }
 
-// Starter Code, Not Employed
+// Starter Code, Not Employed in Final Product
 const nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Todo: create a function to generate a unique task id
