@@ -158,8 +158,6 @@ function openTaskModal() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event) {
-  // DOES NOT WORK !!!
-  // event.preventDefault();
   let taskList = refreshTaskList();
 
   // Creates Temporary Object to hold Task-related User Inputs (Title, Due Date, Description)
