@@ -182,14 +182,6 @@ function renderTaskList() {
     }
   }
 
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   // // Creates <div> for each Task Object, and adds to To-Do swimlane
   // taskList.forEach(createTaskCard);
 
@@ -406,3 +398,14 @@ function handleDrop(event, ui) {
 $(document).ready(function () {
   renderTaskList();
 });
+
+// Superseded in favor of forEach (beginning Line 106)
+// for (let task of taskInv) {
+//   if (task.taskStatus === "to-do") {
+//     todoTasks.append(createTaskCard(task));
+//   } else if (task.taskStatus === "in-progress") {
+//     inProgressTasks.append(createTaskCard(task));
+//   } else if (task.taskStatus === "done") {
+//     doneTasks.append(createTaskCard(task));
+//   }
+// }

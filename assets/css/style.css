@@ -5,7 +5,6 @@
   padding:0;  
 }
 
-
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
@@ -147,22 +146,6 @@ textarea, input {
 
 /* TASK CARDS */
 
-/* .task-card {
-  margin: 0 auto;
-  box-shadow: 0px -10px 10px 0px rgba(0,0,0,0.75); 
-  border-radius: 10px;
-  border-width: 1px;
-  max-width: 800px;
-  padding: 20px 40px;
-  background-color: rgb(255, 255, 255, 0.90);
-  font-size: 18px;
-  color: rgba(0,0,128,1);
-} */
-
-.task-card:hover {
-  cursor: grab;
-}
-
 .card {
   transform-style: preserve-3d;
   perspective: 800px;
@@ -202,19 +185,6 @@ textarea, input {
 
 /* TASK CARD TARDINESS */
 
-/* Task Card Status: 'Done' */
-.task-card-done {
-  background-color: rgb(191, 191, 191, 0.25);
-  color: rgb(0, 0, 0);
-}
-/* Task Card Delete Button Status: 'Done' */
-.delete-btn-done {
-  background-color: rgb(127, 127, 127);
-  color: white;
-  border-color: white;
-  box-shadow: 2px 1px rgb(128, 128, 128, 0.50);
-}
-
 /* Task Card Tardiness: 'On Time' */
 .task-card-ontime {
   background-color: rgba(225, 255, 225, 0.75);
@@ -232,4 +202,18 @@ textarea, input {
 .task-card-late {
   background-color: rgb(255, 0, 0, 1.00);
   color: rgb(255, 255, 255);
+}
+
+/* Task Card Status: 'Done' */
+.task-card-done {
+  background-color: rgb(191, 191, 191, 0.25);
+  color: rgb(0, 0, 0);
+}
+
+/* Task Card Delete Button Status: 'Done' */
+.delete-btn-done {
+  background-color: rgb(127, 127, 127);
+  color: white;
+  border-color: white;
+  box-shadow: 2px 1px rgb(128, 128, 128, 0.50);
 }

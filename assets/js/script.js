@@ -103,17 +103,6 @@ function renderTaskList() {
   doneTasks.empty();
   // << Clear Task Swim Lanes
 
-  // Superseded in favor of forEach (beginning Line 117)
-  // for (let task of taskInv) {
-  //   if (task.taskStatus === "to-do") {
-  //     todoTasks.append(createTaskCard(task));
-  //   } else if (task.taskStatus === "in-progress") {
-  //     inProgressTasks.append(createTaskCard(task));
-  //   } else if (task.taskStatus === "done") {
-  //     doneTasks.append(createTaskCard(task));
-  //   }
-  // }
-
   // Evaluates each Task from Task Array (taskArray) to determine appropriate Task Swim Lane (HTML) and generate Task Cards and appends to correct Lane using Lane ID
   taskInv.forEach((task, status) => {
     if (task.taskStatus === "to-do") {
@@ -251,7 +240,7 @@ function handleDeleteTask(event) {
   let taskInv = refreshTaskList();
   // console.log(taskInv);
 
-  // Superseded in favor of Filter Method (beginning Line 265)
+  // Superseded in favor of Filter Method (beginning Line 250)
   // taskInv.forEach((task) => {
   //   if (task.taskId === taskDelete) {
   //     taskInv.splice(taskInv.indexOf(task), 1);
